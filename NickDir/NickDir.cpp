@@ -2,10 +2,22 @@
 //
 
 #include <iostream>
+#include <Windows.h>
+#include <string>
 
 int main()
 {
-    std::cout << "Hello World!\n";
+
+    std::string Lname;
+    std::string location;
+
+    std::cout << "Enter the name for the alias: ";
+    std::cin >> Lname;
+    std::cout << "Enter the path for the alias: ";
+    std::cin >> location;
+
+    //AddConsoleAlias(TEXT(name), location, TEXT());
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

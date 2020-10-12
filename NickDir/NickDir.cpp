@@ -3,22 +3,44 @@
 
 #include <iostream>
 #include <Windows.h>
-#include <string>
+#include <stringapiset.h>
+
+using namespace std;
+
+LPWSTR convertString(string str) {
+
+    wchar_t wtext[20];
+    size_t strlength = str.length();
+    size_t outSize;
+
+    mbstowcs_s(&outSize, wtext, str.c_str(), strlength);
+    LPWSTR finalstr = wtext;
+
+    return finalstr;
+}
 
 int main()
 {
 
-    std::string Lname;
-    std::string location;
+    string name;
+    string location;
+    string executable = "cmd.exe";
 
-    std::cout << "Enter the name for the alias: ";
-    std::cin >> Lname;
-    std::cout << "Enter the path for the alias: ";
-    std::cin >> location;
+    cout << "Enter the name for the alias: ";
+    cin >> name;
+    cout << "Enter the path for the alias: ";
+    cin >> location;
 
-    //AddConsoleAlias(TEXT(name), location, TEXT());
+    LPWSTR Lname = convertString(name);
 
+    LPWSTR Llocation = convertString(location);
+
+    LPWSTR Lexecutable = convertString(executable);
+
+    AddConsoleAlias(TEXT(name), TEXT(location), TEXT(executable));
+ 
 }
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

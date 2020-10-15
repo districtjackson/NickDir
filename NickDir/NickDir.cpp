@@ -7,11 +7,26 @@
 
 using namespace std;
 
+int numberofWords(string str) {
+    int wordcount = 0;
+    
+    for (int i = 0; i < str.length(); i++) {
+        if (str.at(i) == '\\') {
+            ++wordcount;
+        }
+    }
+
+    return wordcount;
+}
+
 LPWSTR convertString(string str) {
+
+    int wordcount = numberofWords(str);
 
     wchar_t wtext[20];
     size_t strlength = str.length();
     size_t outSize;
+    size_t wordSize = strlength;
 
     mbstowcs_s(&outSize, wtext, str.c_str(), strlength);
     LPWSTR finalstr = wtext;

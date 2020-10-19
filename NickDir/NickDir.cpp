@@ -7,6 +7,8 @@
 
 using namespace std;
 
+//2 methods, replace all the backslashes with spaces, and then rereplace them after, or break the string apart, run it one at a time, and then stitch them all back together after.
+
 int numberofWords(string str) {
     int wordcount = 0;
     
@@ -17,6 +19,34 @@ int numberofWords(string str) {
     }
 
     return wordcount;
+}
+
+string replaceWackWack(string str) {
+    for (int i = 0; i < str.length(); i++) {
+        if (str.at(i) == '\\') {
+            str[i] = ' ';
+        }
+    }
+}
+
+LPWSTR replaceSpace(LPWSTR str, int length) {
+    for (int i = 0; i < length; i++) {
+        if(str.Find[])
+    }
+}
+
+LPWSTR convertLongString(string str) {
+    str = replaceWackWack(str);
+
+    wchar_t wtext[20];
+    size_t strlength = str.length();
+    size_t outSize;
+    size_t wordSize = strlength;
+
+    mbstowcs_s(&outSize, wtext, str.c_str(), strlength);
+    LPWSTR finalstr = wtext;
+
+    return finalstr;
 }
 
 LPWSTR convertString(string str) {

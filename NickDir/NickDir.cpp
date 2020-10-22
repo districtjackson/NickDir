@@ -64,25 +64,39 @@ LPWSTR convertString(string str) {
     return finalstr;
 }
 
+inline std::wstring convert(const std::string& as)
+{
+    wchar_t* buf = new wchar_t[as.size() * 2 + 2];
+    swprintf(buf, L"%S", as.c_str());
+    std::wstring rval = buf;
+    delete[] buf;
+    return rval;
+}
+
 int main()
 {
 
     string name;
     string location;
-    string executable = "cmd.exe";
 
     cout << "Enter the name for the alias: ";
     cin >> name;
     cout << "Enter the path for the alias: ";
     cin >> location;
 
-    LPWSTR Lname = convertString(name);
+    wchar_t testchar = 'r';
 
-    LPWSTR Llocation = convertString(location);
+    LPCWSTR myStr = L"Hello World"; //Testing out cases for Long Pointer types to understand their logic.
 
-    LPWSTR Lexecutable = convertString(executable);
+    LPWSTR testpointer = testchar*;
 
-    AddConsoleAlias(TEXT(name), TEXT(location), TEXT(executable));
+    LPWSTR wideName = convert(name); //Trying to convert directly from a widestring to a LPWSTR (which I now know stands for Long Pointer to Wide String)
+
+    wstring wideLocation = convert(location);
+
+    wstring wideExecutable = L"cmd.exe";
+
+    AddConsoleAlias(wideName*, wideLocation*, wideExecutable*);
  
 }
 

@@ -49,28 +49,42 @@ LPWSTR convertLongString(string str) {
     return finalstr;
 }
 
-LPWSTR convertString(string str) {
-
-    int wordcount = numberofWords(str);
-
-    wchar_t wtext[20];
-    size_t strlength = str.length();
+wchar_t convertChar(char c) {
+    wchar_t wstr;
+    size_t strlength = 1;
     size_t outSize;
     size_t wordSize = strlength;
 
-    mbstowcs_s(&outSize, wtext, str.c_str(), strlength);
-    LPWSTR finalstr = wtext;
-
-    return finalstr;
+    mbstowcs_s(&outSize, wstr, c, strlength);
+    
 }
 
-inline std::wstring convert(const std::string& as)
+wchar_t * convertString(string str) {
+
+    static wchar_t wstr[64];
+
+    for (int i = 0; i < str.length(); i++) {
+        wstr[i] = convertChar(str[i]);
+    }
+
+    wstr[str.length() + 1] = '\0';
+
+    return wstr;
+}
+
+wstring convert(const std::string& str)
 {
-    wchar_t* buf = new wchar_t[as.size() * 2 + 2];
-    swprintf(buf, L"%S", as.c_str());
-    std::wstring rval = buf;
-    delete[] buf;
-    return rval;
+    char* p = "D:\\"; //just for proper syntax highlighting ..."
+    const WCHAR* pwcsName;
+    // required size
+    int nChars = MultiByteToWideChar(CP_ACP, 0, p, -1, NULL, 0);
+    // allocate it
+    pwcsName = new WCHAR[nChars];
+    MultiByteToWideChar(CP_ACP, 0, p, -1, (LPWSTR)pwcsName, nChars);  //Need to learn how to use multibyte to widechar
+    // use it....
+
+    // delete it
+    delete[] pwcsName;
 }
 
 int main()
@@ -84,19 +98,19 @@ int main()
     cout << "Enter the path for the alias: ";
     cin >> location;
 
-    wchar_t testchar = 'r';
+    wchar_t testchar[20] = { 'r' + 'a' };
 
-    LPCWSTR myStr = L"Hello World"; //Testing out cases for Long Pointer types to understand their logic.
+    LPWSTR myStr = testchar; //Testing out cases for Long Pointer types to understand their logic.
 
-    LPWSTR testpointer = testchar*;
+    LPWSTR wideName = convertString(name); //Trying to convert directly from a widestring to a LPWSTR (which I now know stands for Long Pointer to Wide String)
 
-    LPWSTR wideName = convert(name); //Trying to convert directly from a widestring to a LPWSTR (which I now know stands for Long Pointer to Wide String)
+    LPWSTR wideLocation = convertString(location);
 
-    wstring wideLocation = convert(location);
+    wchar_t executable[7] = { "c" + "m" + "d" + "." + "e" + "x" + "e" };
 
-    wstring wideExecutable = L"cmd.exe";
+    LPWSTR wideExecutable = executable;
 
-    AddConsoleAlias(wideName*, wideLocation*, wideExecutable*);
+    AddConsoleAlias(wideName, wideLocation, wideExecutable);
  
 }
 

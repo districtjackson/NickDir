@@ -3,117 +3,30 @@
 
 #include <iostream>
 #include <Windows.h>
-#include <stringapiset.h>
 
 using namespace std;
-
-//2 methods, replace all the backslashes with spaces, and then rereplace them after, or break the string apart, run it one at a time, and then stitch them all back together after.
-
-int numberofWords(string str) {
-    int wordcount = 0;
-    
-    for (int i = 0; i < str.length(); i++) {
-        if (str.at(i) == '\\') {
-            ++wordcount;
-        }
-    }
-
-    return wordcount;
-}
-
-string replaceWackWack(string str) {
-    for (int i = 0; i < str.length(); i++) {
-        if (str.at(i) == '\\') {
-            str[i] = ' ';
-        }
-    }
-}
-
-LPWSTR replaceSpace(LPWSTR str, int length) {
-    for (int i = 0; i < length; i++) {
-        if(str.Find[])
-    }
-}
-
-LPWSTR convertLongString(string str) {
-    str = replaceWackWack(str);
-
-    wchar_t wtext[20];
-    size_t strlength = str.length();
-    size_t outSize;
-    size_t wordSize = strlength;
-
-    mbstowcs_s(&outSize, wtext, str.c_str(), strlength);
-    LPWSTR finalstr = wtext;
-
-    return finalstr;
-}
-
-wchar_t convertChar(char c) {
-    wchar_t wstr;
-    size_t strlength = 1;
-    size_t outSize;
-    size_t wordSize = strlength;
-
-    mbstowcs_s(&outSize, wstr, c, strlength);
-    
-}
-
-wchar_t * convertString(string str) {
-
-    static wchar_t wstr[64];
-
-    for (int i = 0; i < str.length(); i++) {
-        wstr[i] = convertChar(str[i]);
-    }
-
-    wstr[str.length() + 1] = '\0';
-
-    return wstr;
-}
-
-wstring convert(const std::string& str)
-{
-    char* p = "D:\\"; //just for proper syntax highlighting ..."
-    const WCHAR* pwcsName;
-    // required size
-    int nChars = MultiByteToWideChar(CP_ACP, 0, p, -1, NULL, 0);
-    // allocate it
-    pwcsName = new WCHAR[nChars];
-    MultiByteToWideChar(CP_ACP, 0, p, -1, (LPWSTR)pwcsName, nChars);  //Need to learn how to use multibyte to widechar
-    // use it....
-
-    // delete it
-    delete[] pwcsName;
-}
 
 int main()
 {
 
-    string name;
-    string location;
+    wchar_t name[32];
+    wchar_t location[128];
 
     cout << "Enter the name for the alias: ";
-    cin >> name;
+    wcin >> name;
     cout << "Enter the path for the alias: ";
-    cin >> location;
+    wcin >> location;
 
-    wchar_t testchar[20] = { 'r' + 'a' };
+    LPWSTR wideName = name; //Trying to convert directly from a widestring to a LPWSTR (which I now know stands for Long Pointer to Wide String)
 
-    LPWSTR myStr = testchar; //Testing out cases for Long Pointer types to understand their logic.
+    LPWSTR wideLocation = location;
 
-    LPWSTR wideName = convertString(name); //Trying to convert directly from a widestring to a LPWSTR (which I now know stands for Long Pointer to Wide String)
-
-    LPWSTR wideLocation = convertString(location);
-
-    wchar_t executable[7] = { "c" + "m" + "d" + "." + "e" + "x" + "e" };
+    wchar_t executable[8] = L"cmd.exe";
 
     LPWSTR wideExecutable = executable;
 
     AddConsoleAlias(wideName, wideLocation, wideExecutable);
- 
 }
-
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

@@ -9,15 +9,15 @@ using namespace std;
 int main()
 {
 
-    wchar_t name[32];
-    wchar_t tempLocation[128];
+    wchar_t name[33];
+    wchar_t tempLocation[129];
 
-    cout << "Enter the name for the alias: ";
+    cout << "Enter the name for the alias (max 32 characters): ";
     wcin >> name;
-    cout << "Enter the path for the alias: ";
+    cout << "Enter the path for the alias (max 128 characters): ";
     wcin >> tempLocation;
 
-    wchar_t location[131] = L"cd ";
+    wchar_t location[132] = L"cd ";
 
     wcscat_s(location, tempLocation);
 
@@ -30,6 +30,8 @@ int main()
     LPWSTR wideExecutable = executable;
 
     AddConsoleAlias(wideName, wideLocation, wideExecutable);
+
+    cout << "Alias successfully added. Type the name and you will now automatically navigate to that directory.";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -1,5 +1,4 @@
 // NickDir.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include <Windows.h>
@@ -8,20 +7,21 @@ using namespace std;
 
 int main()
 {
-
     wchar_t name[33];
     wchar_t tempLocation[129];
 
-    cout << "Enter the name for the alias (max 32 characters): ";
+    cout << "Welcome to NickDir! This a tool for easily creating shortcuts to navigate between Windows directories.";
+
+    cout << "Enter the name for the shortcut (max 32 characters): ";
     wcin >> name;
-    cout << "Enter the path for the alias (max 128 characters): ";
+    cout << "Enter the path for the shortcut (max 128 characters): ";
     wcin >> tempLocation;
 
     wchar_t location[132] = L"cd ";
 
     wcscat_s(location, tempLocation);
 
-    LPWSTR wideName = name; //Trying to convert directly from a widestring to a LPWSTR (which I now know stands for Long Pointer to Wide String)
+    LPWSTR wideName = name; //Convert directly from a wchar_t to a LPWSTR (which I now know stands for Long Pointer to Wide String)
 
     LPWSTR wideLocation = location;
 
@@ -31,7 +31,7 @@ int main()
 
     AddConsoleAlias(wideName, wideLocation, wideExecutable);
 
-    cout << "Alias successfully added. Type the name and you will now automatically navigate to that directory.";
+    cout << "Shortcut successfully added. Type the name you entered and you will now automatically navigate to that directory.";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

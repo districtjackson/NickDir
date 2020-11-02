@@ -10,12 +10,16 @@ int main()
 {
 
     wchar_t name[32];
-    wchar_t location[128];
+    wchar_t tempLocation[128];
 
     cout << "Enter the name for the alias: ";
     wcin >> name;
     cout << "Enter the path for the alias: ";
-    wcin >> location;
+    wcin >> tempLocation;
+
+    wchar_t location[131] = L"cd ";
+
+    wcscat_s(location, tempLocation);
 
     LPWSTR wideName = name; //Trying to convert directly from a widestring to a LPWSTR (which I now know stands for Long Pointer to Wide String)
 

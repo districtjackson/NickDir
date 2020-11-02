@@ -10,11 +10,11 @@ int main()
     wchar_t name[33];
     wchar_t tempLocation[129];
 
-    cout << "Welcome to NickDir! This a tool for easily creating shortcuts to navigate between Windows directories.";
+    cout << "Welcome to NickDir! This a tool for easily creating shortcuts to navigate between Windows directories.\n\n";
 
     cout << "Enter the name for the shortcut (max 32 characters): ";
     wcin >> name;
-    cout << "Enter the path for the shortcut (max 128 characters): ";
+    cout << "Enter the full path for the shortcut (max 128 characters): ";
     wcin >> tempLocation;
 
     wchar_t location[132] = L"cd ";
@@ -31,7 +31,7 @@ int main()
 
     AddConsoleAlias(wideName, wideLocation, wideExecutable);
 
-    cout << "Shortcut successfully added. Type the name you entered and you will now automatically navigate to that directory.";
+    cout << "\nShortcut successfully added. Type the name you entered and you will now automatically navigate to that directory.\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

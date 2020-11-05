@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <fstream>
 
 using namespace std;
 
@@ -32,6 +33,33 @@ int main()
     AddConsoleAlias(wideName, wideLocation, wideExecutable);
 
     cout << "\nShortcut successfully added. Type the name you entered and you will now automatically navigate to that directory.\n";
+}
+
+//Test to set alias commands permanently
+int Permanent(wchar_t name[33], wchar_t command[132]) {
+    bool exists = FileExists("alias.cmd");
+
+    std::wofstream outfile("alias.cmd");
+
+    if (!exists) {
+        outfile << L"@echo off" << std::endl;
+    }
+
+    wchar_t prefix[162] = L"DOSKEY";
+
+    wcscat_s(prefix, name);
+
+    outfile << wcscat_s(prefix, command) << std::endl;
+}
+
+bool FileExists(const std::string& filename)
+{
+    WIN32_FIND_DATAA fd = { 0 };
+    HANDLE hFound = FindFirstFileA(filename.c_str(), &fd);
+    bool retval = hFound != INVALID_HANDLE_VALUE;
+    FindClose(hFound);
+
+    return retval;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

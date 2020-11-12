@@ -18,20 +18,27 @@ bool fileExists(const std::string& filename)
 
 //Test to set alias commands permanently
 int permanent(wchar_t name[33], wchar_t command[132]) {
-    bool exists = fileExists("C:\\Users\\%USERPROFILE%\\alias.cmd");
+    bool exists = fileExists("C:\\Users\\Jackson\\alias.cmd");
+    //Need to make this portable to any user file.
+    std::wofstream outfile("C:\\Users\\Jackson\\alias.cmd", std::ios_base::app);
 
-    std::wofstream outfile("C:\\Users\\%USERPROFILE%\\alias.cmd");
-
-    if (!exists) {
+    if (!exists) {  
         cout << "First setup";
         outfile << L"@echo off" << std::endl;
     }
 
-    wchar_t prefix[162] = L"DOSKEY";
+    wchar_t prefix[162] = L"DOSKEY ";
 
+    //Bulding command string
     wcscat_s(prefix, name);
 
-    outfile << wcscat_s(prefix, command) << std::endl;
+    wcscat_s(prefix, L"=");
+
+    wcscat_s(prefix, command);
+
+    outfile << prefix << std::endl;
+
+    outfile.close();
 
     return NULL;
 }
@@ -65,6 +72,8 @@ int main()
     AddConsoleAlias(wideName, wideLocation, wideExecutable);
 
     cout << "\nShortcut successfully added. Type the name you entered and you will now automatically navigate to that directory.\n";
+
+    
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

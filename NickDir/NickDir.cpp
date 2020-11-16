@@ -18,9 +18,17 @@ bool fileExists(const std::string& filename)
 
 //Test to set alias commands permanently
 int permanent(wchar_t name[33], wchar_t command[132]) {
-    bool exists = fileExists("C:\\Users\\Jackson\\alias.cmd");
+    
+    wchar_t szBuf[MAX_PATH] = { 0 };
+
+    GetEnvironmentVariable(L"HOMEPATH", szBuf, MAX_PATH);
+    
+    wcscat_s(szBuf, L"alias.cmd");
+
+    bool exists = fileExists(szBuf);
+    
     //Need to make this portable to any user file.
-    std::wofstream outfile("C:\\Users\\Jackson\\alias.cmd", std::ios_base::app);
+    std::wofstream outfile(szBuf, std::ios_base::app);
 
     if (!exists) {  
         cout << "First setup";
@@ -29,7 +37,7 @@ int permanent(wchar_t name[33], wchar_t command[132]) {
 
     wchar_t prefix[162] = L"DOSKEY ";
 
-    //Bulding command string
+    //Builds command string
     wcscat_s(prefix, name);
 
     wcscat_s(prefix, L"=");

@@ -16,20 +16,27 @@ bool fileExists(const std::string& filename)
     return retval;
 }
 
-//Test to set alias commands permanently
+//Creates document to store aliases permanently
 int permanent(wchar_t name[33], wchar_t command[132]) {
     
     wchar_t szBuf[MAX_PATH] = { 0 };
 
     GetEnvironmentVariable(L"HOMEPATH", szBuf, MAX_PATH);
     
-    wcscat_s(szBuf, L"alias.cmd");
+    wcscat_s(szBuf, L"\\alias.cmd");
 
-    bool exists = fileExists(szBuf);
+    wcout << szBuf;
+
+    std::wstring ws(szBuf);
+
+    std:string strBuf(ws.begin(), ws.end());
+
+    bool exists = fileExists(strBuf);
     
-    //Need to make this portable to any user file.
+    //Opens document
     std::wofstream outfile(szBuf, std::ios_base::app);
 
+    //Performs first setup if document does not exist
     if (!exists) {  
         cout << "First setup";
         outfile << L"@echo off" << std::endl;

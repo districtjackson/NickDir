@@ -17,15 +17,13 @@ bool fileExists(const std::string& filename)
 }
 
 //Creates document to store aliases permanently
-int permanent(wchar_t name[33], wchar_t command[132]) {
+int permanent(wchar_t name[33], wchar_t command[MAX_PATH]) {
     
     wchar_t szBuf[MAX_PATH] = { 0 };
 
     GetEnvironmentVariable(L"HOMEPATH", szBuf, MAX_PATH);
     
-    wcscat_s(szBuf, L"\\alias.cmd");
-
-    wcout << szBuf;
+    wcscat_s(szBuf, L"\\alias.doskey");
 
     std::wstring ws(szBuf);
 
@@ -36,22 +34,16 @@ int permanent(wchar_t name[33], wchar_t command[132]) {
     //Opens document
     std::wofstream outfile(szBuf, std::ios_base::app);
 
-    //Performs first setup if document does not exist
-    if (!exists) {  
-        cout << "First setup";
-        outfile << L"@echo off" << std::endl;
-    }
-
-    wchar_t prefix[162] = L"DOSKEY ";
+    wchar_t  fullCommand[162] = L"";
 
     //Builds command string
-    wcscat_s(prefix, name);
+    wcscat_s(fullCommand, name);
 
-    wcscat_s(prefix, L"=");
+    wcscat_s(fullCommand, L"=");
 
-    wcscat_s(prefix, command);
+    wcscat_s(fullCommand, command);
 
-    outfile << prefix << std::endl;
+    outfile << fullCommand << std::endl;
 
     outfile.close();
 
@@ -61,18 +53,23 @@ int permanent(wchar_t name[33], wchar_t command[132]) {
 int main()
 {
     wchar_t name[33];
-    wchar_t tempLocation[129];
+    wchar_t tempLocation[MAX_PATH];
 
     cout << "Welcome to NickDir! This a tool for easily creating shortcuts to navigate between Windows directories.\n\n";
 
-    cout << "Enter the name for the shortcut (max 32 characters): ";
+    cout << "Enter the full path of the file location: ";
+    fgetws(tempLocation, 259, stdin);
+    cout << "Enter the name for the shortcut (one word, max 32 characters): ";
     wcin >> name;
-    cout << "Enter the full path for the shortcut (max 128 characters): ";
-    wcin >> tempLocation;
+    
 
-    wchar_t location[132] = L"cd ";
+    wcout << tempLocation;
+
+    wchar_t location[MAX_PATH] = L"cd ";
     
     wcscat_s(location, tempLocation);
+
+    //wcout << location;
     
     permanent(name, location);
     
